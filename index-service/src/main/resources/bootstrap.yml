@@ -1,0 +1,20 @@
+server:
+  port: 8080
+
+spring:
+  application:
+    name: index-service
+  cloud:
+    config:
+      name: indexservice
+      label: master
+      #uri: http://localhost:10000
+      profile: dev
+      discovery:
+        enabled: true
+        service-id: config-server
+
+eureka:
+  client:
+    service-url:
+      defaultZone: http://wzy1:2181/eureka/,http://wzy2:2182/eureka/,http://wzy3:2183/eureka/

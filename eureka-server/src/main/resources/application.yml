@@ -1,0 +1,84 @@
+#USER: admin
+#PASSWORD: admin
+
+spring:
+  application:
+    name: euerka-server
+#  security:
+#    user:
+#      name: ${USER}
+#      password: ${PASSWORD}
+
+eureka:
+  client:
+    register-with-eureka: true
+    fetch-registry: true
+  server:
+    enable-self-preservation: false #开发环境关闭自我保护，提升开发效率
+    eviction-interval-timer-in-ms: 3000 #提出服务间隔，单位毫秒
+    peer-node-read-timeout-ms: 1000 #集群节点之间读取超时时间。单位：毫秒
+
+#单机配置
+#server:
+#  port: 2181
+#eureka:
+#  client:
+#    register-with-eureka: false
+#    fetch-registry: false
+#    service-url: #暴露给Eureka Client的请求地址
+#      defaultZone: http://localhost:${server.port}/euerka/
+#  server:
+#    enable-self-preservation: false #开发环境关闭自我保护，提升开发效率
+#    eviction-interval-timer-in-ms: 3000 #提出服务间隔，单位毫秒
+
+#集群配置
+---
+
+spring:
+  profiles: euerkaServer1
+server:
+  port: 2181
+eureka:
+  instance:
+    hostname: wzy1
+    #appname: euerka-cluster
+    #prefer-ip-address: true
+    #ip-address:  192.168.56.1
+    instance-id: ${spring.application.name}:2181
+  client:
+    service-url:
+      defaultZone: http://localhost:2182/eureka/,http://localhost:2183/eureka/
+
+---
+
+spring:
+  profiles: euerkaServer2
+server:
+  port: 2182
+eureka:
+  instance:
+    hostname: wzy2
+    #appname: euerka-cluster
+    #prefer-ip-address: true
+    #ip-address:  192.168.56.1
+    instance-id: ${spring.application.name}:2182
+  client:
+    service-url:
+      defaultZone: http://localhost:2181/eureka/,http://localhost:2183/eureka/
+
+---
+
+spring:
+  profiles: euerkaServer3
+server:
+  port: 2183
+eureka:
+  instance:
+    hostname: wzy3
+    #appname: euerka-cluster
+    #prefer-ip-address: true
+    #ip-address:  192.168.56.1
+    instance-id: ${spring.application.name}:2183
+  client:
+    service-url:
+      defaultZone: http://localhost:2181/eureka/,http://localhost:2182/eureka/

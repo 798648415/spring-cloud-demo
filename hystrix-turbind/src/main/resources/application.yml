@@ -1,0 +1,16 @@
+server:
+  port: 9999
+
+spring:
+  application:
+    name: turbine-service
+
+eureka:
+  client:
+    service-url:
+      defaultZone: http://wzy1:2181/eureka/
+
+
+turbine:
+  app-config: index-service,product-servie
+  cluster-name-expression: "'default'"

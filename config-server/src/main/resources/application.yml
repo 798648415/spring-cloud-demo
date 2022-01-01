@@ -1,0 +1,41 @@
+name: wangcheng
+
+server:
+  port: 10000
+
+spring:
+  devtools:
+    add-properties: false
+  application:
+    name: config-server
+  cloud:
+    loadbalancer:
+      ribbon:
+        enabled: false
+    config:
+      server:
+        git:
+          #如果是私人仓库，则需要设置username和password
+          uri: https://github.com/798648415/springcloud-config.git
+          default-label: master #配置文件分支
+          skipSslValidation: true
+          #search-paths: config  #配置文件所在根目录
+          #username:
+          #password:
+#  rabbitmq:
+#    host: 192.168.56.103
+#    username: guest
+#    password: guest
+
+
+eureka:
+  client:
+    service-url:
+      defaultZone: http://wzy1:2181/eureka/,http://wzy2:2182/eureka/,http://wzy3:2183/eureka/
+
+management:
+  endpoints:
+    web:
+      exposure:
+        include: '*'
+

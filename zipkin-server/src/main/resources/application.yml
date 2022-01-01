@@ -1,0 +1,14 @@
+
+server:
+  port: 8848
+
+spring:
+  application:
+    name: zipkin-server
+  profiles:
+    active: test
+
+#manangement:
+#  endpoint:
+
+
